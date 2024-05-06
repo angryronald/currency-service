@@ -1,5 +1,5 @@
 # currency-service
-Handle all responsibility related to currency. This is a sample of implementation DDD, CQRS, SOLID Principle, and DI. 
+Handle all responsibility related to currency. This is a sample of implementation DDD with Layered Architecture, CQRS, SOLID Principle, and DI. 
 
 ## Dependencies
 1. RabbitMQ
@@ -36,7 +36,7 @@ The testing provided only on unit test and integration test for now.
 3. **Domain Layer** is reflected by domain package which contains the business logic for specific domain
 4. **Infrastructure Layer** is reflected by infrastructure package which contains **event** for domain events, **repository** for repository layer, and **external** for external layer
 
-![Layered Architecture - Eric Evans, 2003](https://github.com/angryronald/currency-service/docs/blob/main/DDD-Layered-Architecture.jpg)
+![Layered Architecture - Eric Evans, 2003](https://github.com/angryronald/currency-service/blob/main/docs/DDD-Layered-Architecture.jpg)
 
 ## Documentation
 API Documentation can be found inside /docs
