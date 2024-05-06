@@ -2,7 +2,6 @@ FROM golang:1.21-alpine as builder
 ARG TOKEN=""
 
 RUN apk add --no-cache ca-certificates git
-RUN git config --global url."https://${TOKEN}:@github.com/".insteadOf "https://github.com/"
 
 WORKDIR /currency-service
 COPY go.mod .

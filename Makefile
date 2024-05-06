@@ -7,8 +7,8 @@ run:
 
 .PHONY: docker
 docker: Dockerfile
-	echo "building the $(IMAGE) container..."
-	docker build --build-arg TOKEN="${PAT}" --label "version=$(VERSION)" -t $(IMAGE):$(VERSION) .
+	echo "building the currency-service container..."
+	docker build --label "version=1.0" -t currency-service:1.0 .
 
 .PHONY: test
 test: 
