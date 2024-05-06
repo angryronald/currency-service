@@ -25,7 +25,7 @@ func TestRabbitmqPublisher_Publish(t *testing.T) {
 	subscription[topicName] = rabbitpubsub.OpenSubscription(rabbitmqClientConsumer, topicName, nil)
 
 	// Create a testing context.
-	ctx := context.Background()
+	ctx := context.TODO()
 
 	// Create a mock controller.
 	ctrl := gomock.NewController(t)

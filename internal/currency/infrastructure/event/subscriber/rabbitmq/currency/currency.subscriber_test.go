@@ -29,7 +29,7 @@ func TestCurrencyRabbitmqSubscriber_onCurrencyAdded(t *testing.T) {
 	subscription[string(constant.CURRENCY_ADDED_EVENT)] = rabbitpubsub.OpenSubscription(rabbitmqClientConsumer, string(constant.CURRENCY_ADDED_EVENT), nil)
 
 	// Create a testing context.
-	ctx := context.Background()
+	ctx := context.TODO()
 
 	// Create a mock controller.
 	ctrl := gomock.NewController(t)

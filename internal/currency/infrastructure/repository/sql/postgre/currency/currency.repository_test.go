@@ -53,7 +53,7 @@ func TestCurrencyRepository_FindAll(t *testing.T) {
 
 			repo := NewCurrencyRepository(db)
 
-			currencies, err := repo.FindAll(context.Background())
+			currencies, err := repo.FindAll(context.TODO())
 
 			if err != test.expectedErr {
 				t.Errorf("Expected error: %v, got: %v", test.expectedErr, err)
@@ -108,7 +108,7 @@ func TestCurrencyRepository_FindByCode(t *testing.T) {
 				fmt.Println("error inserting preseed data: ", db.Create(test.preseed).Error)
 			}
 
-			currency, err := repo.FindByCode(context.Background(), test.code)
+			currency, err := repo.FindByCode(context.TODO(), test.code)
 
 			if err != test.expectedErr {
 				t.Errorf("Expected error: %v, got: %v", test.expectedErr, err)
@@ -166,7 +166,7 @@ func TestCurrencyRepository_FindByID(t *testing.T) {
 				fmt.Println("error inserting preseed data: ", db.Create(test.preseed).Error)
 			}
 
-			currency, err := repo.FindByID(context.Background(), test.currencyID)
+			currency, err := repo.FindByID(context.TODO(), test.currencyID)
 
 			if err != test.expectedErr {
 				t.Errorf("Expected error: %v, got: %v", test.expectedErr, err)
@@ -238,7 +238,7 @@ func TestCurrencyRepository_Insert(t *testing.T) {
 				fmt.Println("error inserting preseed data: ", db.Create(test.preseed).Error)
 			}
 
-			insertedCurrency, err := repo.Insert(context.Background(), test.currencyData)
+			insertedCurrency, err := repo.Insert(context.TODO(), test.currencyData)
 
 			if !reflect.DeepEqual(test.expectedErr, err) {
 				t.Errorf("Expected error: %v, got: %v", test.expectedErr, err)
@@ -326,7 +326,7 @@ func TestCurrencyRepository_BulkInsert(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			insertedCurrencies, err := repo.BulkInsert(context.Background(), test.currencyData)
+			insertedCurrencies, err := repo.BulkInsert(context.TODO(), test.currencyData)
 
 			if !reflect.DeepEqual(test.expectedErr, err) {
 				t.Errorf("Expected error: %v, got: %v", test.expectedErr, err)
