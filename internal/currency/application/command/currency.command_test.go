@@ -75,7 +75,7 @@ func TestCurrencyCommand_Add(t *testing.T) {
 		t.Run(test.name, func(t *testing.T) {
 			mockService.EXPECT().Add(gomock.Any(), test.currencyInput.ToDomainModel()).Return(test.mockReturn, test.mockErr).Times(test.serviceExpectedCalledCount)
 
-			currencies, err := command.Add(context.Background(), test.currencyInput)
+			currencies, err := command.Add(context.TODO(), test.currencyInput)
 
 			if !reflect.DeepEqual(test.expectedErr, err) {
 				t.Errorf("Expected error: %v, got: %v", test.expectedErr, err)
@@ -202,9 +202,9 @@ func TestCurrencyCommand_MultipleAdd(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			mockService.EXPECT().MultipleAdd(gomock.Any(), gomock.Any()).Return(test.mockReturn, test.mockErr).Times(test.serviceExpectedCalledCount)
+			mockService.EXPECT().MultipleAddOrUpdate(gomock.Any(), gomock.Any()).Return(test.mockReturn, test.mockErr).Times(test.serviceExpectedCalledCount)
 
-			currencies, err := command.MultipleAdd(context.Background(), test.currenciesInput)
+			currencies, err := command.MultipleAddOrUpdate(context.TODO(), test.currenciesInput)
 
 			if !reflect.DeepEqual(test.expectedErr, err) {
 				t.Errorf("Expected error: %v, got: %v", test.expectedErr, err)

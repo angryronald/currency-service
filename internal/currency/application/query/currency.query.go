@@ -24,7 +24,7 @@ func (q *CurrencyQuery) fallbackList(ctx context.Context) ([]*domainModel.Curren
 	}
 
 	// Note: to keep the services availability high, when it is failing to write to memcached, should not breaking request
-	if _, err := q.currencyService.MultipleAdd(ctx, currencies); err != nil {
+	if _, err := q.currencyService.MultipleAddOrUpdate(ctx, currencies); err != nil {
 		q.log.Warnf("failing to write on memcached as a fallback scenario (List): %v (%v)", err, currencies)
 	}
 

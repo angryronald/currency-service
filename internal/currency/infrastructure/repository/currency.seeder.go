@@ -34,13 +34,13 @@ func Seeding(
 	}
 
 	if existingCurrencies, err := databaseRepository.FindAll(context.Background()); existingCurrencies == nil || err != nil {
-		if currencies, err = databaseRepository.BulkInsert(context.Background(), currencies); err != nil {
+		if currencies, err = databaseRepository.BulkUpsert(context.Background(), currencies); err != nil {
 			return fmt.Errorf("error seeding to database: %v", err)
 		}
 	}
 
 	if existingCurrencies, err := memcachedRepository.FindAll(context.Background()); existingCurrencies == nil || err != nil {
-		if _, err = memcachedRepository.BulkInsert(context.Background(), currencies); err != nil {
+		if _, err = memcachedRepository.BulkUpsert(context.Background(), currencies); err != nil {
 			return fmt.Errorf("error seeding to memcached: %v", err)
 		}
 	}

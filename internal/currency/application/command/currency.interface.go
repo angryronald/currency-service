@@ -8,5 +8,5 @@ import (
 
 type CurrencyCommandInterface interface {
 	Add(ctx context.Context, currency *model.CurrencyApplicationModel) (*model.CurrencyApplicationModel, error)
-	MultipleAdd(ctx context.Context, currencies []*model.CurrencyApplicationModel) ([]*model.CurrencyApplicationModel, error)
+	MultipleAddOrUpdate(ctx context.Context, currencies []*model.CurrencyApplicationModel) ([]*model.CurrencyApplicationModel, error)
 }

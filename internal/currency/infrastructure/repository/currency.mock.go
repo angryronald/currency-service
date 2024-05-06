@@ -36,19 +36,19 @@ func (m *MockCurrencyRepository) EXPECT() *MockCurrencyRepositoryMockRecorder {
 	return m.recorder
 }
 
-// BulkInsert mocks base method.
-func (m *MockCurrencyRepository) BulkInsert(ctx context.Context, currencies []*model.CurrencyRepositoryModel) ([]*model.CurrencyRepositoryModel, error) {
+// BulkUpsert mocks base method.
+func (m *MockCurrencyRepository) BulkUpsert(ctx context.Context, currencies []*model.CurrencyRepositoryModel) ([]*model.CurrencyRepositoryModel, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "BulkInsert", ctx, currencies)
+	ret := m.ctrl.Call(m, "BulkUpsert", ctx, currencies)
 	ret0, _ := ret[0].([]*model.CurrencyRepositoryModel)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// BulkInsert indicates an expected call of BulkInsert.
-func (mr *MockCurrencyRepositoryMockRecorder) BulkInsert(ctx, currencies interface{}) *gomock.Call {
+// BulkUpsert indicates an expected call of BulkUpsert.
+func (mr *MockCurrencyRepositoryMockRecorder) BulkUpsert(ctx, currencies interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BulkInsert", reflect.TypeOf((*MockCurrencyRepository)(nil).BulkInsert), ctx, currencies)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BulkUpsert", reflect.TypeOf((*MockCurrencyRepository)(nil).BulkUpsert), ctx, currencies)
 }
 
 // FindAll mocks base method.

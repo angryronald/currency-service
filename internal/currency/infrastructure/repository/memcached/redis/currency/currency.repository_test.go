@@ -333,7 +333,7 @@ func TestCurrencyRepository_BulkInsert(t *testing.T) {
 				fmt.Printf("error on deleting from cache: %+v", err)
 			}
 
-			insertedCurrency, err := repo.BulkInsert(context.TODO(), test.currencyData)
+			insertedCurrency, err := repo.BulkUpsert(context.TODO(), test.currencyData)
 
 			if !reflect.DeepEqual(err, test.expectedErr) {
 				t.Errorf("Expected error: %v, got: %v", test.expectedErr, err)

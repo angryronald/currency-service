@@ -13,5 +13,5 @@ type CurrencyRepository interface {
 	FindByCode(ctx context.Context, currencyCode string) (*model.CurrencyRepositoryModel, error)
 	FindByID(ctx context.Context, ID uuid.UUID) (*model.CurrencyRepositoryModel, error)
 	Insert(ctx context.Context, currency *model.CurrencyRepositoryModel) (*model.CurrencyRepositoryModel, error)
-	BulkInsert(ctx context.Context, currencies []*model.CurrencyRepositoryModel) ([]*model.CurrencyRepositoryModel, error)
+	BulkUpsert(ctx context.Context, currencies []*model.CurrencyRepositoryModel) ([]*model.CurrencyRepositoryModel, error)
 }

@@ -7,6 +7,7 @@ import (
 	netHttp "net/http"
 	"os"
 	"os/signal"
+	"strconv"
 
 	"github.com/go-chi/chi"
 	"github.com/joho/godotenv"
@@ -17,6 +18,7 @@ import (
 	"github.com/angryronald/currency-service/cmd/currency-service/migration"
 	"github.com/angryronald/currency-service/config"
 	"github.com/angryronald/currency-service/internal/currency/infrastructure/repository"
+	"github.com/angryronald/currency-service/internal/currency/infrastructure/repository/sync"
 	"github.com/angryronald/currency-service/lib/file"
 )
 
@@ -42,6 +44,7 @@ func main() {
 
 	migration.RunMigration()
 	runSeeder(log)
+	runWorker(log)
 
 	go runHTTP(log)
 	go runHTTPProfiler(log)
@@ -71,6 +74,24 @@ func runSeeder(log *logrus.Logger) {
 	); err != nil {
 		log.Fatalf("failed seeding data: %v", err)
 	}
+}
+
+func runWorker(log *logrus.Logger) {
+	defaultPeriodInSec := 5
+	periodInSecInString := config.GetValue(config.WORKER_PERIOD_IN_SEC)
+	periodInSec, err := strconv.Atoi(periodInSecInString)
+	if err != nil || periodInSec == 0 {
+		periodInSec = defaultPeriodInSec
+	}
+
+	go sync.SynchronizeReadAndWriteData(
+		di.AllDependencies.CurrencyMemcachedRepository,
+		di.AllDependencies.CurrencySQLRepository,
+		periodInSec,
+		log,
+	)
+
+	log.Println("all workers are running")
 }
 
 func runSubscribers(log *logrus.Logger) {

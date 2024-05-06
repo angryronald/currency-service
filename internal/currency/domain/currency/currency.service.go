@@ -63,7 +63,7 @@ func (s *CurrencyService) Add(ctx context.Context, currency *model.CurrencyDomai
 	return currency, nil
 }
 
-func (s *CurrencyService) MultipleAdd(ctx context.Context, currencies []*model.CurrencyDomainModel) ([]*model.CurrencyDomainModel, error) {
+func (s *CurrencyService) MultipleAddOrUpdate(ctx context.Context, currencies []*model.CurrencyDomainModel) ([]*model.CurrencyDomainModel, error) {
 	var err error
 
 	currenciesRepo := []*repositoryModel.CurrencyRepositoryModel{}
@@ -71,7 +71,7 @@ func (s *CurrencyService) MultipleAdd(ctx context.Context, currencies []*model.C
 		currenciesRepo = append(currenciesRepo, currency.ToRepositoryModel())
 	}
 
-	if currenciesRepo, err = s.repository.BulkInsert(ctx, currenciesRepo); err != nil {
+	if currenciesRepo, err = s.repository.BulkUpsert(ctx, currenciesRepo); err != nil {
 		return nil, err
 	}
 

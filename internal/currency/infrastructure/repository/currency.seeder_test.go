@@ -61,10 +61,10 @@ func TestRunMigration_Success(t *testing.T) {
 	mockData := getMockData(filepath)
 
 	databaseRepo.EXPECT().FindAll(gomock.Any()).Return(nil, constant.ErrNotFound).Times(1)
-	databaseRepo.EXPECT().BulkInsert(gomock.Any(), gomock.Any()).Return(mockData, nil).Times(1)
+	databaseRepo.EXPECT().BulkUpsert(gomock.Any(), gomock.Any()).Return(mockData, nil).Times(1)
 
 	memcachedRepo.EXPECT().FindAll(gomock.Any()).Return(nil, constant.ErrNotFound).Times(1)
-	memcachedRepo.EXPECT().BulkInsert(gomock.Any(), gomock.Any()).Return(mockData, nil).Times(1)
+	memcachedRepo.EXPECT().BulkUpsert(gomock.Any(), gomock.Any()).Return(mockData, nil).Times(1)
 
 	err := Seeding(memcachedRepo, databaseRepo, filepath)
 
@@ -131,7 +131,7 @@ func TestRunMigration_DatabaseError(t *testing.T) {
 
 	mockerr := errors.New("something went wrong")
 	databaseRepo.EXPECT().FindAll(gomock.Any()).Return(nil, constant.ErrNotFound).Times(1)
-	databaseRepo.EXPECT().BulkInsert(gomock.Any(), gomock.Any()).Return(nil, mockerr).Times(1)
+	databaseRepo.EXPECT().BulkUpsert(gomock.Any(), gomock.Any()).Return(nil, mockerr).Times(1)
 
 	err := Seeding(memcachedRepo, databaseRepo, filepath)
 
@@ -157,11 +157,11 @@ func TestRunMigration_MemcachedError(t *testing.T) {
 	mockData := getMockData(filepath)
 
 	databaseRepo.EXPECT().FindAll(gomock.Any()).Return(nil, constant.ErrNotFound).Times(1)
-	databaseRepo.EXPECT().BulkInsert(gomock.Any(), gomock.Any()).Return(mockData, nil).Times(1)
+	databaseRepo.EXPECT().BulkUpsert(gomock.Any(), gomock.Any()).Return(mockData, nil).Times(1)
 
 	mockerr := errors.New("something went wrong")
 	memcachedRepo.EXPECT().FindAll(gomock.Any()).Return(nil, constant.ErrNotFound).Times(1)
-	memcachedRepo.EXPECT().BulkInsert(gomock.Any(), gomock.Any()).Return(nil, mockerr).Times(1)
+	memcachedRepo.EXPECT().BulkUpsert(gomock.Any(), gomock.Any()).Return(nil, mockerr).Times(1)
 
 	err := Seeding(memcachedRepo, databaseRepo, filepath)
 

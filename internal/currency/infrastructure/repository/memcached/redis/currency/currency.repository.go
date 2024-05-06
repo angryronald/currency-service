@@ -131,7 +131,7 @@ func (r *CurrencyRepository) Insert(ctx context.Context, currency *model.Currenc
 	return currency, nil
 }
 
-func (r *CurrencyRepository) BulkInsert(ctx context.Context, currencies []*model.CurrencyRepositoryModel) ([]*model.CurrencyRepositoryModel, error) {
+func (r *CurrencyRepository) BulkUpsert(ctx context.Context, currencies []*model.CurrencyRepositoryModel) ([]*model.CurrencyRepositoryModel, error) {
 	existingCurrencies, err := r.FindAll(ctx)
 	if err != nil {
 		if err != constant.ErrNotFound {

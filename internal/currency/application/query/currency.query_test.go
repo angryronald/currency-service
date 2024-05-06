@@ -46,76 +46,76 @@ func TestCurrencyService_List(t *testing.T) {
 		handleFallbackMockErr                    error
 		handleFallbackServiceExpectedCalledCount int
 	}{
-		// {
-		// 	name: "Success get all of currencies",
-		// 	expectedReturn: []*model.CurrencyApplicationModel{
-		// 		{
-		// 			ID:   TEST_ID,
-		// 			Code: "USD",
-		// 			Name: "United States Dollar",
-		// 		},
-		// 		{
-		// 			ID:   TEST_ID,
-		// 			Code: "EUR",
-		// 			Name: "Euro",
-		// 		},
-		// 		{
-		// 			ID:   TEST_ID,
-		// 			Code: "THB",
-		// 			Name: "Thailand Baht",
-		// 		},
-		// 		{
-		// 			ID:   TEST_ID,
-		// 			Code: "IDR",
-		// 			Name: "Indonesian Rupiah",
-		// 		},
-		// 	},
-		// 	expectedErr: nil,
-		// 	mockReturn: []*domainModel.CurrencyDomainModel{
-		// 		{
-		// 			ID:   TEST_ID,
-		// 			Code: "USD",
-		// 			Name: "United States Dollar",
-		// 		},
-		// 		{
-		// 			ID:   TEST_ID,
-		// 			Code: "EUR",
-		// 			Name: "Euro",
-		// 		},
-		// 		{
-		// 			ID:   TEST_ID,
-		// 			Code: "THB",
-		// 			Name: "Thailand Baht",
-		// 		},
-		// 		{
-		// 			ID:   TEST_ID,
-		// 			Code: "IDR",
-		// 			Name: "Indonesian Rupiah",
-		// 		},
-		// 	},
-		// 	mockErr:                                  nil,
-		// 	serviceExpectedCalledCount:               1,
-		// 	fallbackMockReturn:                       nil,
-		// 	fallbackMockErr:                          nil,
-		// 	fallbackServiceExpectedCalledCount:       0,
-		// 	handleFallbackMockParam:                  nil,
-		// 	handleFallbackMockErr:                    nil,
-		// 	handleFallbackServiceExpectedCalledCount: 0,
-		// },
-		// {
-		// 	name:                                     "Got error when get currency data",
-		// 	expectedReturn:                           nil,
-		// 	expectedErr:                              errors.New("something went wrong"),
-		// 	mockReturn:                               nil,
-		// 	mockErr:                                  errors.New("something went wrong"),
-		// 	serviceExpectedCalledCount:               1,
-		// 	fallbackMockReturn:                       nil,
-		// 	fallbackMockErr:                          nil,
-		// 	fallbackServiceExpectedCalledCount:       0,
-		// 	handleFallbackMockParam:                  nil,
-		// 	handleFallbackMockErr:                    nil,
-		// 	handleFallbackServiceExpectedCalledCount: 0,
-		// },
+		{
+			name: "Success get all of currencies",
+			expectedReturn: []*model.CurrencyApplicationModel{
+				{
+					ID:   TEST_ID,
+					Code: "USD",
+					Name: "United States Dollar",
+				},
+				{
+					ID:   TEST_ID,
+					Code: "EUR",
+					Name: "Euro",
+				},
+				{
+					ID:   TEST_ID,
+					Code: "THB",
+					Name: "Thailand Baht",
+				},
+				{
+					ID:   TEST_ID,
+					Code: "IDR",
+					Name: "Indonesian Rupiah",
+				},
+			},
+			expectedErr: nil,
+			mockReturn: []*domainModel.CurrencyDomainModel{
+				{
+					ID:   TEST_ID,
+					Code: "USD",
+					Name: "United States Dollar",
+				},
+				{
+					ID:   TEST_ID,
+					Code: "EUR",
+					Name: "Euro",
+				},
+				{
+					ID:   TEST_ID,
+					Code: "THB",
+					Name: "Thailand Baht",
+				},
+				{
+					ID:   TEST_ID,
+					Code: "IDR",
+					Name: "Indonesian Rupiah",
+				},
+			},
+			mockErr:                                  nil,
+			serviceExpectedCalledCount:               1,
+			fallbackMockReturn:                       nil,
+			fallbackMockErr:                          nil,
+			fallbackServiceExpectedCalledCount:       0,
+			handleFallbackMockParam:                  nil,
+			handleFallbackMockErr:                    nil,
+			handleFallbackServiceExpectedCalledCount: 0,
+		},
+		{
+			name:                                     "Got error when get currency data",
+			expectedReturn:                           nil,
+			expectedErr:                              errors.New("something went wrong"),
+			mockReturn:                               nil,
+			mockErr:                                  errors.New("something went wrong"),
+			serviceExpectedCalledCount:               1,
+			fallbackMockReturn:                       nil,
+			fallbackMockErr:                          nil,
+			fallbackServiceExpectedCalledCount:       0,
+			handleFallbackMockParam:                  nil,
+			handleFallbackMockErr:                    nil,
+			handleFallbackServiceExpectedCalledCount: 0,
+		},
 		{
 			name: "Currencies are not exists in memcached, success collect currencies from database",
 			expectedReturn: []*model.CurrencyApplicationModel{
@@ -216,9 +216,9 @@ func TestCurrencyService_List(t *testing.T) {
 
 			mockFallbackService.EXPECT().List(gomock.Any()).Return(test.fallbackMockReturn, test.fallbackMockErr).Times(test.fallbackServiceExpectedCalledCount)
 
-			mockService.EXPECT().MultipleAdd(gomock.Any(), test.handleFallbackMockParam).Return(test.handleFallbackMockParam, test.handleFallbackMockErr).Times(test.handleFallbackServiceExpectedCalledCount)
+			mockService.EXPECT().MultipleAddOrUpdate(gomock.Any(), test.handleFallbackMockParam).Return(test.handleFallbackMockParam, test.handleFallbackMockErr).Times(test.handleFallbackServiceExpectedCalledCount)
 
-			currencies, err := query.List(context.Background())
+			currencies, err := query.List(context.TODO())
 
 			if !reflect.DeepEqual(test.expectedErr, err) {
 				t.Errorf("Expected error: %v, got: %v", test.expectedErr, err)
@@ -346,7 +346,7 @@ func TestCurrencyService_GetByCode(t *testing.T) {
 
 			mockService.EXPECT().Add(gomock.Any(), test.handleFallbackMockParam).Return(test.handleFallbackMockParam, test.handleFallbackMockErr).Times(test.handleFallbackServiceExpectedCalledCount)
 
-			currencies, err := query.GetByCode(context.Background(), test.currencyCode)
+			currencies, err := query.GetByCode(context.TODO(), test.currencyCode)
 
 			if !reflect.DeepEqual(test.expectedErr, err) {
 				t.Errorf("Expected error: %v, got: %v", test.expectedErr, err)

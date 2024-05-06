@@ -98,7 +98,7 @@ func (r *CurrencyRepository) Insert(ctx context.Context, currency *model.Currenc
 	return currency, nil
 }
 
-func (r *CurrencyRepository) BulkInsert(ctx context.Context, currencies []*model.CurrencyRepositoryModel) ([]*model.CurrencyRepositoryModel, error) {
+func (r *CurrencyRepository) BulkUpsert(ctx context.Context, currencies []*model.CurrencyRepositoryModel) ([]*model.CurrencyRepositoryModel, error) {
 	var err error
 
 	for _, currency := range currencies {
@@ -106,7 +106,7 @@ func (r *CurrencyRepository) BulkInsert(ctx context.Context, currencies []*model
 		currency.CreatedAt = time.Now().UTC()
 	}
 
-	if err = r.db.Create(currencies).Error; err != nil {
+	if err = r.db.Save(currencies).Error; err != nil {
 		if err == gorm.ErrDuplicatedKey || strings.Contains(err.Error(), "duplicate key value violates unique constraint") {
 			return nil, constant.ErrConflict
 		}

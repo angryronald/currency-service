@@ -8,8 +8,8 @@ import (
 	context "context"
 	reflect "reflect"
 
-	gomock "github.com/golang/mock/gomock"
 	model "github.com/angryronald/currency-service/internal/currency/application/model"
+	gomock "github.com/golang/mock/gomock"
 )
 
 // MockCurrencyCommandInterface is a mock of CurrencyCommandInterface interface.
@@ -50,17 +50,17 @@ func (mr *MockCurrencyCommandInterfaceMockRecorder) Add(ctx, currency interface{
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Add", reflect.TypeOf((*MockCurrencyCommandInterface)(nil).Add), ctx, currency)
 }
 
-// MultipleAdd mocks base method.
-func (m *MockCurrencyCommandInterface) MultipleAdd(ctx context.Context, currencies []*model.CurrencyApplicationModel) ([]*model.CurrencyApplicationModel, error) {
+// MultipleAddOrUpdate mocks base method.
+func (m *MockCurrencyCommandInterface) MultipleAddOrUpdate(ctx context.Context, currencies []*model.CurrencyApplicationModel) ([]*model.CurrencyApplicationModel, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "MultipleAdd", ctx, currencies)
+	ret := m.ctrl.Call(m, "MultipleAddOrUpdate", ctx, currencies)
 	ret0, _ := ret[0].([]*model.CurrencyApplicationModel)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// MultipleAdd indicates an expected call of MultipleAdd.
-func (mr *MockCurrencyCommandInterfaceMockRecorder) MultipleAdd(ctx, currencies interface{}) *gomock.Call {
+// MultipleAddOrUpdate indicates an expected call of MultipleAddOrUpdate.
+func (mr *MockCurrencyCommandInterfaceMockRecorder) MultipleAddOrUpdate(ctx, currencies interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "MultipleAdd", reflect.TypeOf((*MockCurrencyCommandInterface)(nil).MultipleAdd), ctx, currencies)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "MultipleAddOrUpdate", reflect.TypeOf((*MockCurrencyCommandInterface)(nil).MultipleAddOrUpdate), ctx, currencies)
 }

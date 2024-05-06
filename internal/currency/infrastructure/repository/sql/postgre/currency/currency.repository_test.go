@@ -326,7 +326,7 @@ func TestCurrencyRepository_BulkInsert(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			insertedCurrencies, err := repo.BulkInsert(context.TODO(), test.currencyData)
+			insertedCurrencies, err := repo.BulkUpsert(context.TODO(), test.currencyData)
 
 			if !reflect.DeepEqual(test.expectedErr, err) {
 				t.Errorf("Expected error: %v, got: %v", test.expectedErr, err)

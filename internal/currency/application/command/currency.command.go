@@ -23,7 +23,7 @@ func (c *CurrencyCommand) Add(ctx context.Context, currency *model.CurrencyAppli
 	return currency, nil
 }
 
-func (c *CurrencyCommand) MultipleAdd(ctx context.Context, currencies []*model.CurrencyApplicationModel) ([]*model.CurrencyApplicationModel, error) {
+func (c *CurrencyCommand) MultipleAddOrUpdate(ctx context.Context, currencies []*model.CurrencyApplicationModel) ([]*model.CurrencyApplicationModel, error) {
 	var err error
 
 	currenciesDomain := []*domainModel.CurrencyDomainModel{}
@@ -31,7 +31,7 @@ func (c *CurrencyCommand) MultipleAdd(ctx context.Context, currencies []*model.C
 		currenciesDomain = append(currenciesDomain, currency.ToDomainModel())
 	}
 
-	if currenciesDomain, err = c.currencyService.MultipleAdd(ctx, currenciesDomain); err != nil {
+	if currenciesDomain, err = c.currencyService.MultipleAddOrUpdate(ctx, currenciesDomain); err != nil {
 		return nil, err
 	}
 

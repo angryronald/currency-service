@@ -107,7 +107,7 @@ func TestCurrencyService_List(t *testing.T) {
 		t.Run(test.name, func(t *testing.T) {
 			mockRepo.EXPECT().FindAll(gomock.Any()).Return(test.mockReturn, test.mockErr).Times(test.repoExpectedCalledCount)
 
-			currencies, err := service.List(context.Background())
+			currencies, err := service.List(context.TODO())
 
 			assert.Equal(t, err, test.expectedErr)
 			assert.Equal(t, test.expectedReturn, currencies)
@@ -171,7 +171,7 @@ func TestCurrencyService_GetByCode(t *testing.T) {
 		t.Run(test.name, func(t *testing.T) {
 			mockRepo.EXPECT().FindByCode(gomock.Any(), test.currencyCode).Return(test.mockReturn, test.mockErr).Times(test.repoExpectedCalledCount)
 
-			currencies, err := service.GetByCode(context.Background(), test.currencyCode)
+			currencies, err := service.GetByCode(context.TODO(), test.currencyCode)
 
 			assert.Equal(t, err, test.expectedErr)
 			assert.Equal(t, test.expectedReturn, currencies)
@@ -243,7 +243,7 @@ func TestCurrencyService_Add(t *testing.T) {
 			currencyInBytes, _ := cast.ToBytes(test.expectedReturn)
 			mockPublisher.EXPECT().Publish(gomock.Any(), string(constant.CURRENCY_ADDED_EVENT), gomock.Any(), currencyInBytes).Times(test.publisherExpectedCalledCount)
 
-			currencies, err := service.Add(context.Background(), test.currencyInput)
+			currencies, err := service.Add(context.TODO(), test.currencyInput)
 
 			assert.Equal(t, err, test.expectedErr)
 			assert.Equal(t, test.expectedReturn, currencies)
@@ -369,9 +369,9 @@ func TestCurrencyService_MultipleAdd(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			mockRepo.EXPECT().BulkInsert(gomock.Any(), gomock.Any()).Return(test.mockReturn, test.mockErr).Times(test.repoExpectedCalledCount)
+			mockRepo.EXPECT().BulkUpsert(gomock.Any(), gomock.Any()).Return(test.mockReturn, test.mockErr).Times(test.repoExpectedCalledCount)
 
-			currencies, err := service.MultipleAdd(context.Background(), test.currenciesInput)
+			currencies, err := service.MultipleAddOrUpdate(context.TODO(), test.currenciesInput)
 
 			assert.Equal(t, err, test.expectedErr)
 			assert.Equal(t, test.expectedReturn, currencies)

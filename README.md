@@ -27,7 +27,7 @@ Handle all responsibility related to currency. This is a sample of implementatio
 ```
 
 ### Notes on testing
-Due to issue with dockertest and rabbitmq, the testing on publisher and subscriber which using rabbitmq need to be done manually. Since the time to creating and destroy the container is overlapping with each test.
+Due to issue with dockertest and rabbitmq, the testing on publisher and subscriber which using rabbitmq need to be done manually. Since the time to creating and destroy the container is overlapping with each test. When running the test for subscriber and publisher, you may retry it several times due to the timeout issue and the docker spin-up time.
 The testing provided only on unit test and integration test for now.
 
 ## Description
